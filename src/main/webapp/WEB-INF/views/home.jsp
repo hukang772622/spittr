@@ -7,7 +7,7 @@
     <title>Spittr</title>
 </head>
 <body>
-    <s:message code="firstName.size" />
+    <s:message code="spittr.welcome" /><br/>
     <a href="<c:url value="home.jsp" />">Spitters</a> |
     <a href="<c:url value="home.jsp" />">Register</a>
 </body>
