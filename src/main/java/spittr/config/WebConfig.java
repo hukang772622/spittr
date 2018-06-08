@@ -1,17 +1,18 @@
 package spittr.config;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+
 
 /**
  * Created by Administrator on 2018/5/21.
@@ -19,10 +20,10 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 @EnableWebMvc
 //@ComponentScan("spittr.web")
-@ComponentScan("spittr")
-public class WebConfig extends WebMvcConfigurationSupport{
+@ComponentScan("spittr")//必须要扫描项目下具有@Configuration才会发现配置类并创建bean
+public class WebConfig {
 
-    @Bean
+//    @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
@@ -32,16 +33,11 @@ public class WebConfig extends WebMvcConfigurationSupport{
     }
 
     @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages/messages");
-        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        messageSource.setCacheSeconds(5);
-        return messageSource;
+    public MultipartResolver multipartResolver() throws IOException {
+        return new StandardServletMultipartResolver();
     }
-
-    @Override
-    protected void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
+//    @Override
+//    protected void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//        configurer.enable();
+//    }
 }

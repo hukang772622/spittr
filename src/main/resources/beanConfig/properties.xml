@@ -5,19 +5,22 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <mvc:annotation-driven validator="validator" conversion-service="conversion-service" />
-
+    <mvc:annotation-driven validator="validator" />
+    <!--<mvc:annotation-driven />-->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
-        <property name="validationMessageSource" ref="validationMessageSource"/>
+        <property name="validationMessageSource" ref="notMessageSource"/>
     </bean>
-    <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
-    <bean id="validationMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <!--<bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />-->
+    <bean id="notMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>
+                <!--<value>classpath:messages/messages</value>-->
                 <value>classpath:messageConfig/ValidationMessages</value>
             </list>
         </property>
         <property name="fileEncodings" value="utf-8"/>
     </bean>
+
+    <mvc:resources mapping="images/**" location="/WEB-INF/images/" />
 </beans>
